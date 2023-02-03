@@ -54,19 +54,17 @@ namespace RolePlayingGame
 
                     if ( numberSelected < 1 || numberSelected > 3)
                     {
-                        throw new ArgumentException("The number you put doesn't correspond to any option on the menu.");
+                        throw new ArgumentException("The number you put doesn't correspond to any option in the MAIN MENU.");
 
                         selectMenuNum = false;
                     }
-                    else
+                    else if (numberSelected == 1) // Statistics menu
                     {
                         selectMenuNum = true;
-                    }
-                    if (numberSelected == 1)
-                    {
-                        bool statisticChose = false;
 
-                        while (statisticChose == false)
+                        bool statisticChosen = false;
+
+                        while (statisticChosen == false)
                         {
                             try
                             {
@@ -76,9 +74,9 @@ namespace RolePlayingGame
 
                                 if (statisticSelected < 1 || statisticSelected > 4)
                                 {
-                                    throw new ArgumentException("The number you put doesn't correspond to any option on the STATISTICS menu.");
+                                    throw new ArgumentException("The number you put doesn't correspond to any option in the STATISTICS menu.");
 
-                                    statisticChose = false;
+                                    statisticChosen = false;
                                 }
                                 else if (statisticSelected == 1)
                                 {
@@ -86,7 +84,7 @@ namespace RolePlayingGame
 
                                     string anyKey = Console.ReadLine();
 
-                                    statisticChose = false;
+                                    statisticChosen = false;
                                 }
                                 else if (statisticSelected == 2)
                                 {
@@ -94,7 +92,7 @@ namespace RolePlayingGame
 
                                     string anyKey = Console.ReadLine();
 
-                                    statisticChose = false;
+                                    statisticChosen = false;
                                 }
                                 else if (statisticSelected == 3)
                                 {
@@ -102,11 +100,11 @@ namespace RolePlayingGame
                                     
                                     string anyKey = Console.ReadLine();
 
-                                    statisticChose = false;
+                                    statisticChosen = false;
                                 }
                                 else if (statisticSelected == 4)
                                 {
-                                    statisticChose = true;
+                                    statisticChosen = true;
 
                                     selectMenuNum = false;
                                 }
@@ -115,11 +113,121 @@ namespace RolePlayingGame
                             {
                                 Console.WriteLine(ex.Message);
 
-                                statisticChose = false;
+                                statisticChosen = false;
                             }
                         }
                     }
-                }catch(Exception ex) 
+                    else if (numberSelected == 2) // Inventory menu
+                    {
+                        selectMenuNum = true;
+                        
+                        bool inventoryChosen = false;
+
+                        while (inventoryChosen == false)
+                        {
+                            try
+                            {
+                                Console.WriteLine("\nINVENTORY\n\nSelect an option by its corresponding number:\n\n    1. Change the equipped weapon\n    2. Change the equipped armour\n    3. Back to MAIN MENU\n");
+
+                                int inventorySelected = Int32.Parse(Console.ReadLine());
+
+                                if (inventorySelected < 1 || inventorySelected > 3)
+                                {
+                                    throw new ArgumentException("The number you put doesn't correspond to any option in the INVENTORY menu.");
+
+                                    inventoryChosen = false;
+                                }
+                                else if (inventorySelected == 1)
+                                {
+                                    inventoryChosen = true;
+
+                                    bool weaponChosen = false;
+
+                                    while (weaponChosen == false)
+                                    {
+                                        try
+                                        {
+                                            Console.WriteLine($"Select a weapon of the list above by its corresponding number:\n\n       NAME         ||    POWER\n    1. Katana       ||     85\n    2. Falchion     ||     95\n    3. Longsword    ||     105\n    4. ArmingSword  ||     100\n    5. Estoc        ||     110\n");
+
+                                            int weaponSelected = Int32.Parse(Console.ReadLine());
+
+                                            if (weaponSelected < 1 || weaponSelected > 5)
+                                            {
+                                                throw new ArgumentException("The number you put doesn't correspond to any option in the Weapon list.");
+
+                                                weaponChosen = false;
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine($"\nNow you have selected the weapon \"{weaponSelected}\" for your knight XXXX.\n\nPulse any keyboard to return to INVENTORY menu.\n");
+
+                                                string anyKey = Console.ReadLine();
+
+                                                weaponChosen = true;
+
+                                                inventoryChosen = false;
+                                            }
+                                        } catch(Exception ex) 
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
+                                    }
+                                }
+                                else if (inventorySelected == 2)
+                                {
+                                    inventoryChosen = true;
+
+                                    bool armourChosen = false;
+
+                                    while (armourChosen == false)
+                                    {
+                                        try
+                                        {
+                                            Console.WriteLine($"Select an armour of the list above by its corresponding number:\n\n       NAME               ||    POWER\n    1. The Iron Fortress  ||     55\n    2. Death's Oath       ||     65\n    3. The Brass Dome     ||     70\n    4. Gambeson           ||     85\n    5. Scale Armour       ||     90\n");
+
+                                            int armourSelected = Int32.Parse(Console.ReadLine());
+
+                                            if (armourSelected < 1 || armourSelected > 5)
+                                            {
+                                                throw new ArgumentException("The number you put doesn't correspond to any option in the Armour list.\"");
+
+                                                armourChosen = false;
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine($"\nNow you have selected the armour \"{armourSelected}\" for your knight XXXX.\n\nPulse any keyboard to return to INVENTORY menu.\n");
+
+                                                string anyKey = Console.ReadLine();
+
+                                                armourChosen = true;
+                                                
+                                                inventoryChosen = false;
+                                            }
+                                        } catch(Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
+                                    }
+                                }
+                                else if (inventorySelected == 3)
+                                {
+                                    inventoryChosen= true;
+
+                                    selectMenuNum = false;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                        }
+                    }
+                    else if (numberSelected == 3) // Fight menu
+                    {
+
+                    }
+                }
+                catch(Exception ex) 
                 { 
                     Console.WriteLine(ex.Message);
 
