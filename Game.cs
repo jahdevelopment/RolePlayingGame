@@ -10,34 +10,84 @@ namespace RolePlayingGame
     {
         public static void SelectKnight()
         {
-            bool goodSelection= false;
+            bool knightSelection = false;
             
-            while(goodSelection == false)
+            while(knightSelection == false)
             try
             {
-                Console.WriteLine("\nSelect the knight with their correspondent number:\n\n    1. William Wallace\n    2. Rodrigo Díaz de Vivar\n    3. Saint George\n    4. John Dumbar\n    5. Sir Galahad\n");
+                Console.WriteLine("\nSelect the knight by its corresponding number:\n\n             NAME               ||        STRENGTH       ||       DEFENSE\n    1. William Wallace          ||          125          ||          35\n    2. Rodrigo Díaz de Vivar    ||          115          ||          20\n    3. Saint George             ||          100          ||          30\n    4. John Dumbar              ||          130          ||          28\n    5. Sir Galahad              ||          120          ||          35\n");
 
                 int knightSelected = Int32.Parse(Console.ReadLine());
 
                 if (knightSelected < 1 || knightSelected > 5)
                 {
                     throw new ArgumentException("The number you put doesn't correspond to any knight.");
-
-                    goodSelection = false;
                 }
                 else
                 {
-                    Console.WriteLine($"\nGood choice, you have selected {knightSelected} as your kniht.\n");
+                    Console.WriteLine($"\nGood choice, you have selected \"{knightSelected}\" as your kniht.\n");
                         
-                    goodSelection = true;
+                    knightSelection = true;
                 }
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 
-                goodSelection = false;
+                knightSelection = false;
             }
+            bool weaponSelection = false;
+
+            while (weaponSelection == false)
+            {
+                try
+                {
+                    Console.WriteLine($"Choose a weapon for your hero \"XXXXXXXX\" by its corresponding number:\n\n       NAME         ||  ATTACK POWER\n    1. Katana       ||     85\n    2. Falchion     ||     95\n    3. Longsword    ||     105\n    4. ArmingSword  ||     100\n    5. Estoc        ||     110\n");
+
+                    int weaponNumber = Int32.Parse(Console.ReadLine());
+
+                    if (weaponNumber < 1 || weaponNumber > 5)
+                    {
+                        throw new ArgumentException("The number you put doesn't correspond to any option in the Weapon list.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"\nNow you have selected the weapon \"{weaponNumber}\" for your knight \"XXXX\".\n");
+
+                        weaponSelection = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            bool armourSelection = false;
+
+            while (armourSelection == false)
+            {
+                try
+                {
+                    Console.WriteLine($"Choose an aromur for your hero \"XXXXXXXX\" by its corresponding number:\n\n       NAME               ||   DEFENSE POWER\n    1. The Iron Fortress  ||     55\n    2. Death's Oath       ||     65\n    3. The Brass Dome     ||     70\n    4. Gambeson           ||     85\n    5. Scale Armour       ||     90\n");
+
+                    int armourNumber = Int32.Parse(Console.ReadLine());
+
+                    if (armourNumber < 1 || armourNumber > 5)
+                    {
+                        throw new ArgumentException("The number you put doesn't correspond to any option in the Armour list.\"");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"\nNow you have selected the armour \"{armourNumber}\" for your knight \"XXXX\".\n");
+
+                        armourSelection = true;
+                    }
+                } catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            Console.WriteLine($"Finally, Your selected knight is \"XXXXXXX\", his weapon is the XXXXXXX, and he is equipped with \"XXXXXXXX\" armour.\n");
         }
 
         public static void Menu() 
@@ -55,8 +105,6 @@ namespace RolePlayingGame
                     if ( numberSelected < 1 || numberSelected > 3)
                     {
                         throw new ArgumentException("The number you put doesn't correspond to any option in the MAIN MENU.");
-
-                        selectMenuNum = false;
                     }
                     else if (numberSelected == 1) // Statistics menu
                     {
@@ -75,8 +123,6 @@ namespace RolePlayingGame
                                 if (statisticSelected < 1 || statisticSelected > 4)
                                 {
                                     throw new ArgumentException("The number you put doesn't correspond to any option in the STATISTICS menu.");
-
-                                    statisticChosen = false;
                                 }
                                 else if (statisticSelected == 1)
                                 {
@@ -134,8 +180,6 @@ namespace RolePlayingGame
                                 if (inventorySelected < 1 || inventorySelected > 3)
                                 {
                                     throw new ArgumentException("The number you put doesn't correspond to any option in the INVENTORY menu.");
-
-                                    inventoryChosen = false;
                                 }
                                 else if (inventorySelected == 1)
                                 {
@@ -154,8 +198,6 @@ namespace RolePlayingGame
                                             if (weaponSelected < 1 || weaponSelected > 5)
                                             {
                                                 throw new ArgumentException("The number you put doesn't correspond to any option in the Weapon list.");
-
-                                                weaponChosen = false;
                                             }
                                             else
                                             {
@@ -190,8 +232,6 @@ namespace RolePlayingGame
                                             if (armourSelected < 1 || armourSelected > 5)
                                             {
                                                 throw new ArgumentException("The number you put doesn't correspond to any option in the Armour list.\"");
-
-                                                armourChosen = false;
                                             }
                                             else
                                             {
