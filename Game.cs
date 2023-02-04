@@ -8,6 +8,105 @@ namespace RolePlayingGame
 {
     public static class Game
     {
+        public static HashSet<Hero> Heroes = new HashSet<Hero>();
+
+        public static HashSet<Monster> Monsters = new HashSet<Monster>();
+
+        public static HashSet<Weapon> Weapons = new HashSet<Weapon>();
+
+        public static HashSet<Armour> Armours = new HashSet<Armour>();
+
+
+
+        private static int _heroIdCount = 1;
+
+        private static int _monsterIdCount = 1;
+
+        private static int _weaponIdCount = 1;
+
+        private static int _armourIdCount = 1;
+
+
+        public static Weapon? GetWeapon(int weaponId)
+        {
+            Weapon? weapon = null;
+
+            foreach (Weapon w in Weapons)
+            {
+                if (w.WeaponId == weaponId)
+                {
+                    weapon = w;
+
+                    break;
+                }
+            }
+            return weapon;
+        }
+
+
+        public static Armour? GetArmour(int armourId)
+        {
+            Armour? armour = null;
+
+            foreach (Armour a in Armours)
+            {
+                if (a.ArmourId == armourId)
+                {
+                    armour = a;
+
+                    break;
+                }
+            }
+            return armour;
+        }
+
+
+
+        public static void CreateHero(string heroName, int heroBaseStrength, int heroBaseDefense, int heroOriginalHealth, int heroCurrentHealth, int weaponId, int armourId)
+        {
+            Weapon equippedWeapon = GetWeapon(weaponId);
+
+            Armour equippedArmour = GetArmour(armourId);
+
+            Hero newHero = new Hero(_heroIdCount, heroName, heroBaseStrength, heroBaseDefense, heroOriginalHealth, heroCurrentHealth, equippedWeapon, equippedArmour);
+
+            _heroIdCount++;
+
+            Heroes.Add(newHero);
+        }
+
+
+        public static void CreateMonster(string monsterName, int monsterBaseStrength, int monsterBaseDefense, int monsterOriginalHealth, int monsterCurrentHealth)
+        {
+            Monster newMonster = new Monster(_monsterIdCount, monsterName, monsterBaseStrength, monsterBaseDefense, monsterOriginalHealth, monsterCurrentHealth);
+
+            _monsterIdCount++;
+
+            Monsters.Add(newMonster);
+        }
+
+        
+        public static void CreateWeapon(string weaponName, int weaponPower)
+        {
+            Weapon newWeapon = new Weapon(_weaponIdCount, weaponName, weaponPower);
+
+            _weaponIdCount++;
+
+            Weapons.Add(newWeapon);
+        }
+
+
+        public static void CreateArmour(string armourName, int armourPower)
+        {
+            Armour newArmour = new Armour(_armourIdCount, armourName, armourPower);
+
+            _armourIdCount++;
+
+            Armours.Add(newArmour);
+        }
+
+
+
         public static void SelectKnight()
         {
             bool knightSelection = false;
@@ -280,15 +379,39 @@ namespace RolePlayingGame
 
         public static void Start()
         {
+            CreateMonster("Goblin", 10, 5, 20, 20);
+            CreateMonster("Orc", 15, 8, 25, 25);
+            CreateMonster("Troll", 20, 10, 30, 30);
+            CreateMonster("Dragon", 30, 15, 40, 40);
+            CreateMonster("Demon", 40, 20, 50, 50);
+
+            CreateArmour("The Iron Fortress", 55);
+            CreateArmour("Death's Oath", 65);
+            CreateArmour("The Brass Dome", 70);
+            CreateArmour("Gambeson", 85);
+            CreateArmour("Scale Armour", 90);
+
+            CreateWeapon("Katana", 85);
+            CreateWeapon("Falchion", 95);
+            CreateWeapon("Longsword", 105);
+            CreateWeapon("Arming Sword", 100);
+            CreateWeapon("Estoc", 110);
+
+            CreateHero("William Wallace", 125, 35, 500, 500, 1, 1);
+            CreateHero("Rodrigo Díaz De Vivar", 115, 20, 500, 500, 2, 2);
+            CreateHero("Saint George", 100, 30, 500, 500, 3, 3);
+            CreateHero("John Dunbar", 130, 28, 500, 500, 4, 4);
+            CreateHero("Sir Galahad", 120, 35, 500, 500, 5, 5);
+
             Console.WriteLine("|||||||||||||||=============== \"MEDIEVAL KNIGHTS Vs EPIC MONSTERS\" GAME ===============|||||||||||||||\n");
 
             Console.WriteLine("Loading...\n\nPulse any keyboard to start the game...\n");
+            
             string starting = Console.ReadLine();
-
+            
             SelectKnight();
 
             Menu();
         }     
-
     }
 }
