@@ -22,6 +22,7 @@ namespace RolePlayingGame
 
         public int WeaponPower { get { return _weaponPower;} }
 
+        
 
         public Weapon(int weaponId, string weaponName, int weaponPower)
         {

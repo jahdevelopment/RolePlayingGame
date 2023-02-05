@@ -16,6 +16,7 @@ namespace RolePlayingGame
 
         public static HashSet<Armour> Armours = new HashSet<Armour>();
 
+        public static Fight Fight;
 
 
         private static int _heroIdCount = 1;
@@ -25,6 +26,41 @@ namespace RolePlayingGame
         private static int _weaponIdCount = 1;
 
         private static int _armourIdCount = 1;
+
+
+
+        public static Hero GetHero(int heroId)
+        {
+            Hero hero = null;
+
+            foreach (Hero h in Heroes)
+            {
+                if (h.HeroId == heroId)
+                {
+                    hero = h;
+
+                    break;
+                }
+            }
+            return hero;
+        }
+
+
+        public static Monster GetMonster(int monsterId)
+        {
+            Monster monster = null;
+
+            foreach (Monster m in Monsters)
+            {
+                if (m.MonsterId == monsterId)
+                {
+                    monster = m;
+
+                    break;
+                }
+            }
+            return monster;
+        }
 
 
         public static Weapon? GetWeapon(int weaponId)
@@ -59,7 +95,6 @@ namespace RolePlayingGame
             }
             return armour;
         }
-
 
 
         public static void CreateHero(string heroName, int heroBaseStrength, int heroBaseDefense, int heroOriginalHealth, int heroCurrentHealth, int weaponId, int armourId)
@@ -105,18 +140,19 @@ namespace RolePlayingGame
             Armours.Add(newArmour);
         }
 
-
-
-        public static void SelectKnight()
+                
+        public static int? SelectKnight()
         {
             bool knightSelection = false;
-            
-            while(knightSelection == false)
+
+            int knightSelected = 0;
+
+            while (knightSelection == false)
             try
             {
-                Console.WriteLine("\nSelect the knight by its corresponding number:\n\n             NAME               ||        STRENGTH       ||       DEFENSE\n    1. William Wallace          ||          125          ||          35\n    2. Rodrigo Díaz de Vivar    ||          115          ||          20\n    3. Saint George             ||          100          ||          30\n    4. John Dumbar              ||          130          ||          28\n    5. Sir Galahad              ||          120          ||          35\n");
+                Console.WriteLine($"\nSelect the knight by its corresponding number:\n\n      NAME                || STRENGTH  ||  DEFENSE  ||   WEAPON (Attack Power)  ||   ARMOUR (Defense Power)\n1. {GetHero(1).HeroName}        ||    {GetHero(1).HeroBaseStrength}    ||    {GetHero(1).HeroBaseDefense}     ||  {GetWeapon(1).WeaponName} ({GetWeapon(1).WeaponPower})             ||  {GetArmour(1).ArmourName} ({GetArmour(1).ArmourPower})\n2. {GetHero(2).HeroName}  ||    {GetHero(2).HeroBaseStrength}    ||    {GetHero(2).HeroBaseDefense}     ||  {GetWeapon(2).WeaponName} ({GetWeapon(2).WeaponPower})           ||  {GetArmour(2).ArmourName} ({GetArmour(2).ArmourPower})\n3. {GetHero(3).HeroName}           ||    {GetHero(3).HeroBaseStrength}    ||    {GetHero(3).HeroBaseDefense}     ||  {GetWeapon(3).WeaponName} ({GetWeapon(3).WeaponPower})         ||  {GetArmour(3).ArmourName} ({GetArmour(3).ArmourPower})\n4. {GetHero(4).HeroName}            ||    {GetHero(4).HeroBaseStrength}    ||    {GetHero(4).HeroBaseDefense}     ||  {GetWeapon(4).WeaponName} ({GetWeapon(4).WeaponPower})      ||  {GetArmour(4).ArmourName} ({GetArmour(4).ArmourPower})\n5. {GetHero(5).HeroName}            ||    {GetHero(5).HeroBaseStrength}    ||    {GetHero(5).HeroBaseDefense}     ||  {GetWeapon(5).WeaponName} ({GetWeapon(5).WeaponPower})             ||  {GetArmour(5).ArmourName} ({GetArmour(5).ArmourPower})\n");
 
-                int knightSelected = Int32.Parse(Console.ReadLine());
+                knightSelected = Int32.Parse(Console.ReadLine());
 
                 if (knightSelected < 1 || knightSelected > 5)
                 {
@@ -124,9 +160,11 @@ namespace RolePlayingGame
                 }
                 else
                 {
-                    Console.WriteLine($"\nGood choice, you have selected \"{knightSelected}\" as your kniht.\n");
-                        
-                    knightSelection = true;
+                        Hero myHero = new Hero(knightSelected, GetHero(knightSelected).HeroName, GetHero(knightSelected).HeroBaseStrength, GetHero(knightSelected).HeroBaseDefense, GetHero(knightSelected).HeroOriginalHealth, GetHero(knightSelected).HeroCurrentHealth, GetHero(knightSelected).EquippedWeapon, GetHero(knightSelected).EquippedArmour);
+
+                        myHero.GetInventory(knightSelected);
+
+                        knightSelection = true;
                 }
             }
             catch(Exception ex)
@@ -135,59 +173,33 @@ namespace RolePlayingGame
                 
                 knightSelection = false;
             }
-            bool weaponSelection = false;
-
-            while (weaponSelection == false)
-            {
-                try
-                {
-                    Console.WriteLine($"Choose a weapon for your hero \"XXXXXXXX\" by its corresponding number:\n\n       NAME         ||  ATTACK POWER\n    1. Katana       ||     85\n    2. Falchion     ||     95\n    3. Longsword    ||     105\n    4. ArmingSword  ||     100\n    5. Estoc        ||     110\n");
-
-                    int weaponNumber = Int32.Parse(Console.ReadLine());
-
-                    if (weaponNumber < 1 || weaponNumber > 5)
-                    {
-                        throw new ArgumentException("The number you put doesn't correspond to any option in the Weapon list.");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"\nNow you have selected the weapon \"{weaponNumber}\" for your knight \"XXXX\".\n");
-
-                        weaponSelection = true;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-            bool armourSelection = false;
-
-            while (armourSelection == false)
-            {
-                try
-                {
-                    Console.WriteLine($"Choose an aromur for your hero \"XXXXXXXX\" by its corresponding number:\n\n       NAME               ||   DEFENSE POWER\n    1. The Iron Fortress  ||     55\n    2. Death's Oath       ||     65\n    3. The Brass Dome     ||     70\n    4. Gambeson           ||     85\n    5. Scale Armour       ||     90\n");
-
-                    int armourNumber = Int32.Parse(Console.ReadLine());
-
-                    if (armourNumber < 1 || armourNumber > 5)
-                    {
-                        throw new ArgumentException("The number you put doesn't correspond to any option in the Armour list.\"");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"\nNow you have selected the armour \"{armourNumber}\" for your knight \"XXXX\".\n");
-
-                        armourSelection = true;
-                    }
-                } catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-            Console.WriteLine($"Finally, Your selected knight is \"XXXXXXX\", his weapon is the XXXXXXX, and he is equipped with \"XXXXXXXX\" armour.\n");
+            return knightSelected;
         }
+
+
+        private static int _chooseRandomMonster()
+        {
+            int min = 1;
+
+            int max = 5;
+
+            Random rnd = new Random();
+
+            int monsterNum = rnd.Next(min, max + 1);
+
+            return monsterNum;
+        }
+
+
+        public static void StartFight(int heroId, int monsterId)
+        {
+            Hero hero = GetHero(heroId);
+
+            Monster monster = GetMonster(monsterId);
+
+            Fight newFight = new Fight(hero, monster);
+        }
+
 
         public static void Menu() 
         {
@@ -300,7 +312,9 @@ namespace RolePlayingGame
                                             }
                                             else
                                             {
-                                                Console.WriteLine($"\nNow you have selected the weapon \"{weaponSelected}\" for your knight XXXX.\n\nPulse any keyboard to return to INVENTORY menu.\n");
+                                                Console.WriteLine($"\nNow you have selected the weapon \"{GetWeapon(weaponSelected).WeaponName}\" for your knight {GetHero(weaponSelected).HeroName}.\n\nPulse any keyboard to return to INVENTORY menu.\n");
+
+                                                
 
                                                 string anyKey = Console.ReadLine();
 
@@ -363,6 +377,12 @@ namespace RolePlayingGame
                     }
                     else if (numberSelected == 3) // Fight menu
                     {
+                        selectMenuNum = true;
+
+                        Monster monsterChosen = new Monster(GetMonster(_chooseRandomMonster()).MonsterId, GetMonster(_chooseRandomMonster()).MonsterName, GetMonster(_chooseRandomMonster()).MonsterBaseStrength, GetMonster(_chooseRandomMonster()).MonsterBaseDefense, GetMonster(_chooseRandomMonster()).MonsterOriginalHealth, GetMonster(_chooseRandomMonster()).MonsterCurrentHealth);
+
+
+                        StartFight(1, monsterChosen.MonsterId);
 
                     }
                 }
@@ -379,15 +399,15 @@ namespace RolePlayingGame
 
         public static void Start()
         {
-            CreateMonster("Goblin", 10, 5, 20, 20);
-            CreateMonster("Orc", 15, 8, 25, 25);
-            CreateMonster("Troll", 20, 10, 30, 30);
-            CreateMonster("Dragon", 30, 15, 40, 40);
-            CreateMonster("Demon", 40, 20, 50, 50);
+            CreateMonster("Hidrocervus", 170, 65, 1000, 1000);
+            CreateMonster("Manticore", 150, 70, 1000, 1000);
+            CreateMonster("Mermaid", 240, 80, 1000, 1000);
+            CreateMonster("Monoceros", 220, 75, 1000, 1000);
+            CreateMonster("Ogre", 200, 60, 1000, 1000);
 
-            CreateArmour("The Iron Fortress", 55);
+            CreateArmour("Iron Fortress", 55);
             CreateArmour("Death's Oath", 65);
-            CreateArmour("The Brass Dome", 70);
+            CreateArmour("Brass Dome", 70);
             CreateArmour("Gambeson", 85);
             CreateArmour("Scale Armour", 90);
 
@@ -397,19 +417,24 @@ namespace RolePlayingGame
             CreateWeapon("Arming Sword", 100);
             CreateWeapon("Estoc", 110);
 
-            CreateHero("William Wallace", 125, 35, 500, 500, 1, 1);
-            CreateHero("Rodrigo Díaz De Vivar", 115, 20, 500, 500, 2, 2);
-            CreateHero("Saint George", 100, 30, 500, 500, 3, 3);
-            CreateHero("John Dunbar", 130, 28, 500, 500, 4, 4);
-            CreateHero("Sir Galahad", 120, 35, 500, 500, 5, 5);
+            CreateHero("William Wallace", 135, 45, 500, 500, 1, 1);
+            CreateHero("Rodrigo Díaz De Vivar", 125, 30, 500, 500, 2, 2);
+            CreateHero("Saint George", 110, 40, 500, 500, 3, 3);
+            CreateHero("John Dunbar", 140, 38, 500, 500, 4, 4);
+            CreateHero("Sir Galahad", 130, 48, 500, 500, 5, 5);
 
             Console.WriteLine("|||||||||||||||=============== \"MEDIEVAL KNIGHTS Vs EPIC MONSTERS\" GAME ===============|||||||||||||||\n");
 
-            Console.WriteLine("Loading...\n\nPulse any keyboard to start the game...\n");
+            Console.WriteLine("Loading...\n\nPulse any key to start the game...\n");
             
             string starting = Console.ReadLine();
             
             SelectKnight();
+
+            //Hero myHero = new Hero(GetHero(SelectKnight().Value).HeroId, GetHero(SelectKnight().Value).HeroName, GetHero(SelectKnight().Value).HeroBaseStrength, GetHero(SelectKnight().Value).HeroBaseDefense, GetHero(SelectKnight().Value).HeroOriginalHealth, GetHero(SelectKnight().Value).HeroCurrentHealth, GetHero(SelectKnight().Value).EquippedWeapon, GetHero(SelectKnight().Value).EquippedArmour);
+
+            
+            //Console.WriteLine(myHero.HeroName);
 
             Menu();
         }     

@@ -40,7 +40,12 @@ namespace RolePlayingGame
 
         private int _monsterCurrentHealth;
 
-        public int MonsterCurrentHealth { get { return _monsterCurrentHealth; } }
+        public int MonsterCurrentHealth { get { return _monsterCurrentHealth; } set { _monsterCurrentHealth = value;  } }
+
+        //public void _setMonsterCurrentHealth()
+        //{
+        //    set 
+        //}
 
 
         public Monster(int monsterId, string monsterName, int monsterBaseStrength, int monsterBaseDefense, int monsterOriginalHealth, int monsterCurrentHealth)
