@@ -144,7 +144,7 @@ namespace RolePlayingGame
 
         public Fight(Hero hero, Monster monster)
         {
-            Console.WriteLine($"You will fight against \"{monster.MonsterName}\".");
+            Console.WriteLine($"\nYou will fight against \"{monster.MonsterName}\".");
 
             TurnToStart(hero, monster);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace RolePlayingGame
 
         public static Fight Fight;
 
+        public static int numberOfHero;
 
         private static int _heroIdCount = 1;
 
@@ -173,15 +175,26 @@ namespace RolePlayingGame
                 
                 knightSelection = false;
             }
+            static Hero getFromHeroes<Hero>(HashSet<Hero> heroes, Hero knightSelected)
+            {
+                foreach (Hero hero in heroes)
+                {
+                    if (hero.Equals(knightSelected))
+                    {
+                        return hero;
+                    }
+                }
+                return default(Hero);
+            }
             return knightSelected;
         }
 
-
+        
         private static int _chooseRandomMonster()
         {
             int min = 1;
 
-            int max = 5;
+            int max = Monsters.Count;
 
             Random rnd = new Random();
 
@@ -205,15 +218,15 @@ namespace RolePlayingGame
         {
             bool selectMenuNum = false;
             
-            while( selectMenuNum == false )
+            while(selectMenuNum == false)
             {
                 try
                 {
-                    Console.WriteLine("\nMAIN MENU:\n\nSelect an option by its corresponding number:\n\n    1. STATISTICS\n    2. INVENTORY\n    3. FIGHT\n");
+                    Console.WriteLine("\nMAIN MENU:\n\nSelect an option by its corresponding number:\n\n    1. STATISTICS\n    2. INVENTORY\n    3. FIGHT\n    4. EXIT\n");
 
                     int numberSelected = Int32.Parse(Console.ReadLine());
 
-                    if ( numberSelected < 1 || numberSelected > 3)
+                    if (numberSelected < 1 || numberSelected > 4)
                     {
                         throw new ArgumentException("The number you put doesn't correspond to any option in the MAIN MENU.");
                     }
@@ -254,7 +267,7 @@ namespace RolePlayingGame
                                 else if (statisticSelected == 3)
                                 {
                                     Console.WriteLine($"\nYour knight XXXXX has lost XXXX batles.\n\nPulse any keyboard to return to STATISTICS menu.\n");
-                                    
+
                                     string anyKey = Console.ReadLine();
 
                                     statisticChosen = false;
@@ -266,7 +279,7 @@ namespace RolePlayingGame
                                     selectMenuNum = false;
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
 
@@ -277,7 +290,7 @@ namespace RolePlayingGame
                     else if (numberSelected == 2) // Inventory menu
                     {
                         selectMenuNum = true;
-                        
+
                         bool inventoryChosen = false;
 
                         while (inventoryChosen == false)
@@ -314,7 +327,7 @@ namespace RolePlayingGame
                                             {
                                                 Console.WriteLine($"\nNow you have selected the weapon \"{GetWeapon(weaponSelected).WeaponName}\" for your knight {GetHero(weaponSelected).HeroName}.\n\nPulse any keyboard to return to INVENTORY menu.\n");
 
-                                                
+
 
                                                 string anyKey = Console.ReadLine();
 
@@ -322,7 +335,8 @@ namespace RolePlayingGame
 
                                                 inventoryChosen = false;
                                             }
-                                        } catch(Exception ex) 
+                                        }
+                                        catch (Exception ex)
                                         {
                                             Console.WriteLine(ex.Message);
                                         }
@@ -353,10 +367,11 @@ namespace RolePlayingGame
                                                 string anyKey = Console.ReadLine();
 
                                                 armourChosen = true;
-                                                
+
                                                 inventoryChosen = false;
                                             }
-                                        } catch(Exception ex)
+                                        }
+                                        catch (Exception ex)
                                         {
                                             Console.WriteLine(ex.Message);
                                         }
@@ -364,7 +379,7 @@ namespace RolePlayingGame
                                 }
                                 else if (inventorySelected == 3)
                                 {
-                                    inventoryChosen= true;
+                                    inventoryChosen = true;
 
                                     selectMenuNum = false;
                                 }
@@ -379,15 +394,23 @@ namespace RolePlayingGame
                     {
                         selectMenuNum = true;
 
+                        Hero myHero = new Hero(GetHero(numberOfHero).HeroId, GetHero(numberOfHero).HeroName, GetHero(numberOfHero).HeroBaseStrength, GetHero(numberOfHero).HeroBaseDefense, GetHero(numberOfHero).HeroOriginalHealth, GetHero(numberOfHero).HeroCurrentHealth, GetHero(numberOfHero).EquippedWeapon, GetHero(numberOfHero).EquippedArmour);
+
                         Monster monsterChosen = new Monster(GetMonster(_chooseRandomMonster()).MonsterId, GetMonster(_chooseRandomMonster()).MonsterName, GetMonster(_chooseRandomMonster()).MonsterBaseStrength, GetMonster(_chooseRandomMonster()).MonsterBaseDefense, GetMonster(_chooseRandomMonster()).MonsterOriginalHealth, GetMonster(_chooseRandomMonster()).MonsterCurrentHealth);
 
-
-                        StartFight(1, monsterChosen.MonsterId);
+                        
+                        StartFight(myHero.HeroId, monsterChosen.MonsterId);
 
                     }
+                    else if (numberSelected == 4)
+                    {
+                        Console.WriteLine("\n            Thanks...\n\n\n                                Bye Bye!!\n\n");
+
+                        selectMenuNum = true;
+                    }
                 }
-                catch(Exception ex) 
-                { 
+                catch (Exception ex)
+                {
                     Console.WriteLine(ex.Message);
 
                     selectMenuNum = false;
@@ -395,48 +418,42 @@ namespace RolePlayingGame
             }
         }
 
-
-
         public static void Start()
         {
-            CreateMonster("Hidrocervus", 170, 65, 1000, 1000);
-            CreateMonster("Manticore", 150, 70, 1000, 1000);
-            CreateMonster("Mermaid", 240, 80, 1000, 1000);
-            CreateMonster("Monoceros", 220, 75, 1000, 1000);
+            CreateMonster("Hidrocervus", 195, 65, 1000, 1000);
+            CreateMonster("Manticore", 205, 60, 1000, 1000);
+            CreateMonster("Mermaid", 220, 75, 1000, 1000);
+            CreateMonster("Monoceros", 190, 70, 1000, 1000);
             CreateMonster("Ogre", 200, 60, 1000, 1000);
 
-            CreateArmour("Iron Fortress", 55);
-            CreateArmour("Death's Oath", 65);
+            CreateArmour("Iron Fortress", 65);
+            CreateArmour("Death's Oath", 75);
             CreateArmour("Brass Dome", 70);
             CreateArmour("Gambeson", 85);
             CreateArmour("Scale Armour", 90);
 
-            CreateWeapon("Katana", 85);
+            CreateWeapon("Katana", 90);
             CreateWeapon("Falchion", 95);
             CreateWeapon("Longsword", 105);
             CreateWeapon("Arming Sword", 100);
             CreateWeapon("Estoc", 110);
 
-            CreateHero("William Wallace", 135, 45, 500, 500, 1, 1);
+            CreateHero("William Wallace", 145, 45, 500, 500, 1, 1);
             CreateHero("Rodrigo Díaz De Vivar", 125, 30, 500, 500, 2, 2);
             CreateHero("Saint George", 110, 40, 500, 500, 3, 3);
-            CreateHero("John Dunbar", 140, 38, 500, 500, 4, 4);
-            CreateHero("Sir Galahad", 130, 48, 500, 500, 5, 5);
+            CreateHero("John Dunbar", 140, 35, 500, 500, 4, 4);
+            CreateHero("Sir Galahad", 130, 50, 500, 500, 5, 5);
 
-            Console.WriteLine("|||||||||||||||=============== \"MEDIEVAL KNIGHTS Vs EPIC MONSTERS\" GAME ===============|||||||||||||||\n");
+            Console.WriteLine("|||||||||||||||=============== \"MEDIEVAL KNIGHTS Vs EPIC MONSTERS\" ===============|||||||||||||||\n");
 
             Console.WriteLine("Loading...\n\nPulse any key to start the game...\n");
             
-            string starting = Console.ReadLine();
+            Console.ReadLine();
             
-            SelectKnight();
-
-            //Hero myHero = new Hero(GetHero(SelectKnight().Value).HeroId, GetHero(SelectKnight().Value).HeroName, GetHero(SelectKnight().Value).HeroBaseStrength, GetHero(SelectKnight().Value).HeroBaseDefense, GetHero(SelectKnight().Value).HeroOriginalHealth, GetHero(SelectKnight().Value).HeroCurrentHealth, GetHero(SelectKnight().Value).EquippedWeapon, GetHero(SelectKnight().Value).EquippedArmour);
-
+            numberOfHero = SelectKnight().Value;
             
-            //Console.WriteLine(myHero.HeroName);
-
             Menu();
+        
         }     
     }
 }

@@ -69,7 +69,7 @@
 
         public void GetInventory(int heroId)
         {
-           Console.WriteLine($"Your selected knight is \"{Game.GetHero(heroId).HeroName}\", his weapon is the \"{Game.GetWeapon(heroId).WeaponName}\", and he is equipped with the \"{Game.GetArmour(heroId).ArmourName}\" armour.\n");
+           Console.WriteLine($"\nYour selected knight is \"{Game.GetHero(heroId).HeroName}\", his weapon is the \"{Game.GetWeapon(heroId).WeaponName}\", and he is equipped with the \"{Game.GetArmour(heroId).ArmourName}\" armour.\n");
         }
 
 
