@@ -125,7 +125,7 @@ namespace RolePlayingGame
 
                 _gamesPlayed++;
 
-                Console.WriteLine($"Fight number {Game.numberOfFights+=_gamesPlayed}. Hero \"{hero1.HeroName}\" has won {Game.numberOfWins+=_gamesWon} batles, and lost {Game.numberOfLoses+=_gamesLost} batles.");
+                Console.WriteLine($"Fight number {Game.numberOfFights+=_gamesPlayed}. Hero \"{hero1.HeroName}\" has won {Game.numberOfWins+=_gamesWon} battles, and lost {Game.numberOfLoses+=_gamesLost} battles.");
 
                 Game.Menu();
             }
@@ -162,7 +162,7 @@ namespace RolePlayingGame
 
                 _gamesPlayed++;
 
-                Console.WriteLine($"Fight number {Game.numberOfFights += _gamesPlayed}. Hero \"{hero1.HeroName}\" has won {Game.numberOfWins+=_gamesWon} batles, and lost {Game.numberOfLoses+=_gamesLost} batles.");
+                Console.WriteLine($"Fight number {Game.numberOfFights += _gamesPlayed}. Hero \"{hero1.HeroName}\" has won {Game.numberOfWins+=_gamesWon} battles, and lost {Game.numberOfLoses+=_gamesLost} battles.");
 
                 Game.Menu();
             }
@@ -180,8 +180,6 @@ namespace RolePlayingGame
             _monster = monster;
             
             TurnToStart(hero, monster);
-
-
         }
     }
 }

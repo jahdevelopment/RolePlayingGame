@@ -72,24 +72,6 @@
            Console.WriteLine($"\nYour selected knight is \"{Game.GetHero(heroId).HeroName}\", his weapon is the \"{Game.GetHero(heroId).EquippedWeapon.WeaponName}\", and he is equipped with the \"{Game.GetHero(heroId).EquippedArmour.ArmourName}\" armour.\n");
         }
 
-
-        //public void _setEquipWeapon(int weaponId)
-        //{
-        //    Weapon weapon = null;
-
-        //    if (weapon.WeaponId.Equals(weaponId))
-        //    {
-        //        _equippedWeapon = weapon;
-        //    }
-        //}
-
-
-        //public void EquipArmour(Armour armour)
-        //{
-        //    _equippedArmour = armour;
-        //}
-
-
         public Hero(int heroId, string heroName,int heroBaseStrength, int heroBaseDefense, int heroOriginalHealth, int heroCurrentHealth, Weapon equippedWeapon, Armour equippedArmour)
         {
             _heroId = heroId;

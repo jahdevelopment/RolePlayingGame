@@ -470,11 +470,11 @@ namespace RolePlayingGame
             CreateWeapon("Arming Sword", 100);
             CreateWeapon("Estoc", 110);
 
-            CreateHero("William Wallace", 145, 45, 500, 500, 1, 1);
-            CreateHero("Rodrigo Díaz De Vivar", 125, 30, 500, 500, 2, 2);
-            CreateHero("Saint George", 110, 40, 500, 500, 3, 3);
-            CreateHero("John Dunbar", 140, 35, 500, 500, 4, 4);
-            CreateHero("Sir Galahad", 130, 50, 500, 500, 5, 5);
+            CreateHero("William Wallace", 155, 45, 500, 500, 1, 1);
+            CreateHero("Rodrigo Díaz De Vivar", 135, 30, 500, 500, 2, 2);
+            CreateHero("Saint George", 120, 40, 500, 500, 3, 3);
+            CreateHero("John Dunbar", 150, 35, 500, 500, 4, 4);
+            CreateHero("Sir Galahad", 140, 50, 500, 500, 5, 5);
 
             Console.WriteLine("|||||||||||||||=============== \"MEDIEVAL KNIGHTS Vs EPIC MONSTERS\" ===============|||||||||||||||\n");
 
