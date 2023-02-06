@@ -13,6 +13,21 @@ namespace RolePlayingGame
         public Hero Hero { get { return _hero; } }
 
 
+        private int _gamesPlayed;
+
+        public int GamesPlayed{ get { return _gamesPlayed; } }
+
+
+        private int _gamesWon;
+
+        public int GamesWon { get { return _gamesWon; } }
+
+
+        private int _gamesLost;
+
+        public int GamesLost { get { return _gamesLost; } } 
+
+
         private Monster _monster;
 
         public Monster Monster { get { return _monster; } }
@@ -28,11 +43,13 @@ namespace RolePlayingGame
 
             int turn = rnd.Next(min, max +1);
 
+
+
             if (turn == 1)
             {
+                Console.WriteLine($"\nOriginal \"{hero.HeroName}\" health is: {hero.HeroCurrentHealth}, and original \"{monster.MonsterName}\" health is: {monster.MonsterCurrentHealth}\n");
+                
                 Console.WriteLine($"\nThe Hero \"{hero.HeroName}\" starts the fight.\n");
-
-                Console.WriteLine($"Original \"{hero.HeroName}\" health is: {hero.HeroCurrentHealth}, and original \"{monster.MonsterName}\" health is: {monster.MonsterCurrentHealth}\n");
 
                 Console.WriteLine("Pulse Enter to continue...");
 
@@ -55,9 +72,9 @@ namespace RolePlayingGame
             }
             else
             {
-                Console.WriteLine($"\nThe Monster \"{monster.MonsterName}\" starts the fight.\n");
+                Console.WriteLine($"\nOriginal \"{hero.HeroName}\" health is: {hero.HeroCurrentHealth}, and original \"{monster.MonsterName}\" health is: {monster.MonsterCurrentHealth}\n");
 
-                Console.WriteLine($"Original \"{hero.HeroName}\" health is: {hero.HeroCurrentHealth}, and original \"{monster.MonsterName}\" health is: {monster.MonsterCurrentHealth}\n");
+                Console.WriteLine($"\nThe Monster \"{monster.MonsterName}\" starts the fight.\n");
 
                 Console.WriteLine("Pulse Enter to continue...");
 
@@ -85,7 +102,7 @@ namespace RolePlayingGame
             Hero hero1 = hero;
 
             Monster monster1 = monster;
-
+            
             int HeroAttachDamage = hero1.HeroBaseStrength + hero1.EquippedWeapon.WeaponPower - monster1.MonsterBaseDefense;
 
             Console.WriteLine($"The Hero \"{hero1.HeroName}\" attacks!\n");
@@ -103,6 +120,12 @@ namespace RolePlayingGame
                 hero1.HeroCurrentHealth = hero1.HeroOriginalHealth;
 
                 monster1.MonsterCurrentHealth = monster1.MonsterOriginalHealth;
+
+                _gamesWon++;
+
+                _gamesPlayed++;
+
+                Console.WriteLine($"Fight number {Game.numberOfFights+=_gamesPlayed}. Hero \"{hero1.HeroName}\" has won {Game.numberOfWins+=_gamesWon} batles, and lost {Game.numberOfLoses+=_gamesLost} batles.");
 
                 Game.Menu();
             }
@@ -135,6 +158,12 @@ namespace RolePlayingGame
 
                 monster1.MonsterCurrentHealth = monster1.MonsterOriginalHealth;
 
+                _gamesLost++;
+
+                _gamesPlayed++;
+
+                Console.WriteLine($"Fight number {Game.numberOfFights += _gamesPlayed}. Hero \"{hero1.HeroName}\" has won {Game.numberOfWins+=_gamesWon} batles, and lost {Game.numberOfLoses+=_gamesLost} batles.");
+
                 Game.Menu();
             }
             Console.WriteLine($"Now the current \"{hero1.HeroName}\" health is: {hero1.HeroCurrentHealth}, and the current \"{monster1.MonsterName}\" health is: {monster1.MonsterCurrentHealth}\n");
@@ -144,13 +173,15 @@ namespace RolePlayingGame
 
         public Fight(Hero hero, Monster monster)
         {
-            Console.WriteLine($"\nYou will fight against \"{monster.MonsterName}\".");
-
-            TurnToStart(hero, monster);
+            Console.WriteLine($"\nYour hero \"{hero.HeroName}\" will fight against \"{monster.MonsterName}\".");
 
             _hero = hero;
 
             _monster = monster;
+            
+            TurnToStart(hero, monster);
+
+
         }
     }
 }

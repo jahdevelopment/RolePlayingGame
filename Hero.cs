@@ -41,48 +41,53 @@
         private Weapon _equippedWeapon;
 
         public Weapon EquippedWeapon { get { return _equippedWeapon; } }
-        
-        //private int? _setEquippedWeapon(int equippedWeapon)
-        //{
-        //    _equippedWeapon = equippedWeapon;
 
-        //    return _equippedWeapon;
-        //}
+        public void _setEquippedWeapon(int weaponId)
+        {
+            Weapon weapon = Game.GetWeapon(weaponId);
+
+            _equippedWeapon = weapon;
+        }
 
 
         private Armour _equippedArmour;
 
         public Armour EquippedArmour { get { return _equippedArmour; } }
 
-        //private int? _setEquippedArmour(int equippedArmour)
-        //{
-        //    _equippedArmour = equippedArmour;
+        public void _setEquippedArmour(int armourId)
+        {
+            Armour armour = Game.GetArmour(armourId);
 
-        //    return _equippedArmour;
-        //}
+            _equippedArmour = armour;
+        }
 
 
         public void GetStats(int heroId)
         {
-            Console.WriteLine($"\nYour knight {HeroName} has won XXXX batles.\n\nPulse any keyboard to return to STATISTICS menu.\n");
+            Console.WriteLine($"\nYour knight {HeroName} has won XXXX battles.\n\nPulse any keyboard to return to STATISTICS menu.\n");
         }
 
         public void GetInventory(int heroId)
         {
-           Console.WriteLine($"\nYour selected knight is \"{Game.GetHero(heroId).HeroName}\", his weapon is the \"{Game.GetWeapon(heroId).WeaponName}\", and he is equipped with the \"{Game.GetArmour(heroId).ArmourName}\" armour.\n");
+           Console.WriteLine($"\nYour selected knight is \"{Game.GetHero(heroId).HeroName}\", his weapon is the \"{Game.GetHero(heroId).EquippedWeapon.WeaponName}\", and he is equipped with the \"{Game.GetHero(heroId).EquippedArmour.ArmourName}\" armour.\n");
         }
 
 
-        public void EquipWeapon(Weapon weapon)
-        {
-            _equippedWeapon = weapon;
-        }
+        //public void _setEquipWeapon(int weaponId)
+        //{
+        //    Weapon weapon = null;
+
+        //    if (weapon.WeaponId.Equals(weaponId))
+        //    {
+        //        _equippedWeapon = weapon;
+        //    }
+        //}
 
 
-        public void EquipArmour(Armour armour)
-        {
-            _equippedArmour = armour;
-        }
+        //public void EquipArmour(Armour armour)
+        //{
+        //    _equippedArmour = armour;
+        //}
 
 
         public Hero(int heroId, string heroName,int heroBaseStrength, int heroBaseDefense, int heroOriginalHealth, int heroCurrentHealth, Weapon equippedWeapon, Armour equippedArmour)
